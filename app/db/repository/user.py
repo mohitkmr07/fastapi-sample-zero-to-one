@@ -7,7 +7,7 @@ from app.db.repository.base import BaseRepository
 from app.db.session import SessionLocal
 
 
-class UserRepository(BaseRepository[User, User, User]):
+class UserRepository(BaseRepository[User]):
 
     # extra queries that can be over written
     def get_by_name(self, db: SessionLocal, tenant_app_id: UUID, external_id: str) -> Optional[User]:

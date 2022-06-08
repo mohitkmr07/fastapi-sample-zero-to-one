@@ -9,11 +9,9 @@ from app.db.models.model import Base
 from app.db.session import SessionLocal
 
 ModelType = TypeVar("ModelType", bound=Base)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
-class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+class BaseRepository(Generic[ModelType]):
     def __init__(self, model: Type[ModelType]):
         """
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
@@ -25,15 +23,15 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    def get_all_by_ids(self, db: SessionLocal, *, ids: Any) -> Optional[List[ModelType]]:
+    def get_all_by_ids(self, db: Session, *, ids: Any) -> Optional[List[ModelType]]:
         if ids is None:
             ids = []
         return db.query(self.model).filter(self.model.id.in_(ids)).all()
 
-    def get_by_id(self, db: SessionLocal, id: UUID) -> Optional[ModelType]:
+    def get_by_id(self, db: Session, id: UUID) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
 
-    def get(self, db: SessionLocal, *, offset: int = 0, limit: int = 100) -> Optional[List[ModelType]]:
+    def get(self, db: Session, *, offset: int = 0, limit: int = 100) -> Optional[List[ModelType]]:
         return db.query(self.model).offset(offset).limit(limit).all()
 
     def create(self, db: Session, *, obj_in: Optional[ModelType]) -> Optional[ModelType]:
@@ -47,7 +45,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.refresh(obj_in)
         return obj_in
 
-    def update(self, db: SessionLocal, *, db_obj: Optional[ModelType]) -> Optional[ModelType]:
+    def update(self, db: Session, *, db_obj: Optional[ModelType]) -> Optional[ModelType]:
         if not db_obj:
             return None
 
