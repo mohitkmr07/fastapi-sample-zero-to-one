@@ -1,9 +1,10 @@
+import uuid
 from datetime import datetime
 from typing import Optional, cast
-import uuid
+
 from sqlalchemy import Column, String, DateTime, Integer
-from sqlalchemy.orm import declarative_base
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -27,4 +28,4 @@ class User(Base, CommonBase):
     __tablename__ = 'user'
 
     age = cast(int, Column(Integer))
-    name = cast(str, Column(String(100), nullable=False))
+    name = cast(int, Column(String(100), nullable=False))
