@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Any, Generic, List, Optional, Type, TypeVar
 from uuid import UUID
 
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.db.models.model import Base
