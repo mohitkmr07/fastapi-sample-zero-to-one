@@ -24,7 +24,8 @@ def create_user(user_request: UserRequest, request: Request, db: Session):
 def get_user_by_id(id: UUID, db: Session):
     user: Optional[User] = user_repository.get_by_id(db=db, id=id)
     if not user:
-        raise RequestError(status_code=HTTPStatus.NOT_FOUND, error_code=ErrorCode.INCORRECT_USER_ID)
+        raise RequestError(status_code=HTTPStatus.NOT_FOUND, error_code=ErrorCode.INCORRECT_USER_ID,
+                           error_msg="User Not Found")
 
     return user
 
