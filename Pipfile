@@ -11,6 +11,8 @@ python-dotenv = "*"
 pydantic = "*"
 starlette = "*"
 psycopg2-binary = "*"
+aioredis = "*"
+sqlalchemy-serializer = "*"
 
 [dev-packages]
 

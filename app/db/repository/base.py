@@ -4,6 +4,7 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
+from app.cache.redis import CacheableEntity
 from app.db.models.model import Base
 from app.db.session import SessionLocal
 
@@ -27,7 +28,8 @@ class BaseRepository(Generic[ModelType]):
             ids = []
         return db.query(self.model).filter(self.model.id.in_(ids)).all()
 
-    def get_by_id(self, db: Session, id: UUID) -> Optional[ModelType]:
+    @CacheableEntity('id')
+    async def get_by_id(self, db: Session, id: UUID) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
 
     def get(self, db: Session, *, offset: int = 0, limit: int = 100) -> Optional[List[ModelType]]:
