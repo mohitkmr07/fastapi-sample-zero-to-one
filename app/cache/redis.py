@@ -31,7 +31,7 @@ async def get_cache(key: str):
         return json.loads(cache_data)
 
 
-class CacheableEntity(object):
+class CachedEntity(object):
     """Strictly to be used for read only
        It does not return a orm object
        it just returns a json
@@ -46,7 +46,7 @@ class CacheableEntity(object):
         async def execute_method(*args, **kwargs):
             key: str = ''
             try:
-                key = await get_entity_cache_key(args[0].model.__tablename__, self.args, **kwargs)
+                key = get_entity_cache_key(args[0].model.__tablename__, self.args, **kwargs)
                 print("key=", key)
                 data = await get_cache(key)
                 if data:
@@ -64,10 +64,47 @@ class CacheableEntity(object):
         return execute_method
 
 
-async def get_entity_cache_key(primary_key: str, *args, **kwargs) -> str:
+class CachableEntity(object):
+    """Strictly to be used for read only
+       It does not return a orm object
+       it just returns a json
+
+       """
+
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+
+    def __call__(self, fn):
+        async def execute_method(*args, **kwargs):
+            to_execute: SerializerMixin = await fn(*args, **kwargs)
+            try:
+                data = to_execute.to_dict()
+                key = get_entity_cache_key(args[0].model.__tablename__, self.args, **data)
+                print("keys=", key)
+                await set_cache(data=to_execute.to_dict(), key=key)
+            except (ConnectionError, TimeoutError, Exception) as e:
+                print("Handled exception")
+            return to_execute
+
+        return execute_method
+
+
+def get_entity_cache_key(primary_key: str, *args, **kwargs) -> str:
     key: str = primary_key
     for i in args[0]:
         if i in kwargs:
             key = f'{key}:{str(kwargs[i])}'
 
     return key
+
+
+def set_entity_cache_key(obj) -> str:
+    key: str = obj.__tablename__
+    key = f'{key}:{str(obj.id)}'
+    return key
+
+
+async def cache_entity(obj):
+    key: str = set_entity_cache_key(obj=obj)
+    await set_cache(obj.to_dict(), key)

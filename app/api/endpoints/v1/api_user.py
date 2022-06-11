@@ -16,8 +16,8 @@ api_router = APIRouter()
 
 @api_router.post("", response_model=UserResponse, status_code=HTTPStatus.CREATED)
 async def create_user(user_request: UserRequest, request: Request, db: Session = Depends(get_db)) -> UserResponse:
-    user: Optional[User] = user_service.create_user(user_request=user_request,
-                                                    request=request, db=db)
+    user: Optional[User] = await user_service.create_user(user_request=user_request,
+                                                          request=request, db=db)
     return user
 
 
