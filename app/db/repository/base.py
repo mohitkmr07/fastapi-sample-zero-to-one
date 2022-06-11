@@ -4,7 +4,6 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
-from app.cache.redis import CachedEntity
 from app.db.models.model import Base
 from app.db.session import SessionLocal
 
@@ -28,7 +27,6 @@ class BaseRepository(Generic[ModelType]):
             ids = []
         return db.query(self.model).filter(self.model.id.in_(ids)).all()
 
-    @CachedEntity('id')
     async def get_by_id(self, db: Session, id: UUID) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
 

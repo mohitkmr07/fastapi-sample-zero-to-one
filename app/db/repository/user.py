@@ -3,7 +3,7 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
-from app.cache.redis import CachedEntity, CachableEntity
+from app.cache.redis import CachedEntity, CacheEntity
 from app.db.models.model import User
 from app.db.repository.base import BaseRepository
 
@@ -23,7 +23,7 @@ class UserCachedRepository(UserRepository):
     async def get_by_id(self, db: Session, id: UUID) -> Optional[User]:
         return db.query(self.model).filter(self.model.id == id).first()
 
-    @CachableEntity('id')
+    @CacheEntity('id')
     async def create(self, db: Session, *, obj_in: Optional[User]) -> Optional[User]:
         obj_in = super().create(db=db, obj_in=obj_in)
         return obj_in

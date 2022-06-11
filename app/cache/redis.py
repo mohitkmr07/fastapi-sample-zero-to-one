@@ -64,7 +64,7 @@ class CachedEntity(object):
         return execute_method
 
 
-class CachableEntity(object):
+class CacheEntity(object):
     """Strictly to be used for read only
        It does not return a orm object
        it just returns a json
