@@ -7,26 +7,30 @@ from starlette.requests import Request
 
 from app.common.errors import ErrorCode
 from app.core.exceptions import RequestError
-from app.db.models.model import User
-from app.db.repository.user import user_repository
+from app.db.models.model import User, Address
+from app.db.repository.address import address_repository
+from app.db.repository.user import user_repository, user_cached_repository
 from app.schemas.user import UserRequest, UserResponse
 
 
-def create_user(user_request: UserRequest, request: Request, db: Session):
-    user = User()
+async def create_user(user_request: UserRequest, request: Request, db: Session):
+    user: User = User()
     user.name = user_request.name
     user.age = user_request.age
     user.context = request.url.path
-    user: User = user_repository.create(db=db, obj_in=user)
+    address: Address = Address()
+    address.details = user.name
+    address = address_repository.create(db=db, obj_in=address)
+    user.address_id = address.id
+    user: User = await user_cached_repository.create(db=db, obj_in=user)
     return user
 
 
-def get_user_by_id(id: UUID, db: Session):
-    user: Optional[User] = user_repository.get_by_id(db=db, id=id)
+async def get_user_by_id(id: UUID, db: Session):
+    user: Optional[User] = await user_cached_repository.get_by_id(db=db, id=id)
     if not user:
         raise RequestError(status_code=HTTPStatus.NOT_FOUND, error_code=ErrorCode.INCORRECT_USER_ID,
                            error_msg="User Not Found")
-
     return user
 
 

@@ -2,12 +2,20 @@ import uuid
 from datetime import datetime
 from typing import Optional, cast
 
+import sqlalchemy.sql.schema
 from sqlalchemy import Column, String, DateTime, Integer
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy_serializer import SerializerMixin
 
 Base = declarative_base()
 metadata = Base.metadata
+
+
+class CustomSerializerMixin(SerializerMixin):
+    serialize_types = (
+        (UUID, lambda x: str(x)),
+    )
 
 
 class CommonBase:
@@ -24,8 +32,16 @@ class CommonBase:
     context = cast(Optional[str], Column(String))
 
 
-class User(Base, CommonBase):
+class Address(Base, CommonBase, SerializerMixin):
+    __tablename__ = 'address'
+    details = cast(int, Column(String(100), nullable=False))
+
+
+class User(Base, CommonBase, SerializerMixin):
     __tablename__ = 'user'
 
     age = cast(int, Column(Integer))
     name = cast(int, Column(String(100), nullable=False))
+    address_id = cast(UUID(as_uuid=True), Column(sqlalchemy.sql.schema.ForeignKey(Address.id), nullable=False))  # type: ignore
+
+    address = relationship(Address)

@@ -5,6 +5,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, constr
 
+from app.schemas.address import AddressResponse
+
 
 class UserBase(BaseModel):
     name: constr(min_length=1, strip_whitespace=True)  # type: ignore
@@ -19,6 +21,7 @@ class UserResponse(UserBase):
     id: UUID
     created_at: datetime
     updated_at: datetime
+    address: AddressResponse
 
     class Config:
         orm_mode = True

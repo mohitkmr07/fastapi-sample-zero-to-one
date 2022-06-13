@@ -29,6 +29,7 @@ class Settings:
     POOL_RESET_ON_RETURN = config("POOL_RESET_ON_RETURN", cast=str, default="rollback")
     POOL_TIMEOUT_IN_SECONDS = config("POOL_TIMEOUT_IN_SECONDS", cast=int, default=30)
     POOL = config("POOL", cast=str, default="~sqlalchemy.pool.QueuePool")
+    REDIS_URL = config("REDIS_URL", cast=str)
 
 
 settings = Settings()

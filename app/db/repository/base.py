@@ -27,7 +27,7 @@ class BaseRepository(Generic[ModelType]):
             ids = []
         return db.query(self.model).filter(self.model.id.in_(ids)).all()
 
-    def get_by_id(self, db: Session, id: UUID) -> Optional[ModelType]:
+    async def get_by_id(self, db: Session, id: UUID) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
 
     def get(self, db: Session, *, offset: int = 0, limit: int = 100) -> Optional[List[ModelType]]:
