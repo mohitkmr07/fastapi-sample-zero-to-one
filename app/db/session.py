@@ -12,4 +12,4 @@ engine = create_engine(settings.SQLALCHEMY_DATABASE_URI,
                        echo_pool=settings.ECHO_POOL,
                        pool_reset_on_return=settings.POOL_RESET_ON_RETURN,
                        pool_timeout=settings.POOL_TIMEOUT_IN_SECONDS)
-SessionLocal = sessionmaker(autocommit=True, autoflush=True, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
