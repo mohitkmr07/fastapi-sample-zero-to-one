@@ -65,9 +65,7 @@ class CachedEntity(object):
 
 
 class CacheEntity(object):
-    """Strictly to be used for read only
-       It does not return a orm object
-       it just returns a json
+    """This decorator will store the data in the cache
 
        """
 

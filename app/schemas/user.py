@@ -5,7 +5,6 @@ from uuid import UUID
 
 from pydantic import BaseModel, constr
 
-from app.db.models.model import Address
 from app.schemas.address import AddressResponse
 
 
