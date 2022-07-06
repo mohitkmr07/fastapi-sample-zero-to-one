@@ -23,7 +23,7 @@ class BaseDocumentRepository(Generic[DocumentModelType]):
         * `schema`: A Pydantic model (schema) class
         """
         self.model = model
-        self.__collection__ = model.__collection_name__
+        self.__collection__ = model.__collection__
 
     @property
     def collection(self):

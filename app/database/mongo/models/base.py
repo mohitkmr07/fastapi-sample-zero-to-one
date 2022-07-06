@@ -22,12 +22,11 @@ class OID(str):
 
 
 class DocumentModel(dict):
-    pass
+    _id: Optional[OID]
 
 
 class Student(DocumentModel):
-    __collection_name__ = 'students'
-    _id: Optional[OID]
+    __collection__ = 'students'
     name: Optional[str]
     email: Optional[str]
     course: Optional[str]

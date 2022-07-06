@@ -7,18 +7,3 @@ client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS,
                                                 minPoolSize=10)
 
 database = client.test_db
-#
-# student_collection = database.get_collection("students_collection")
-
-
-# helpers
-
-#
-# def student_helper(student) -> dict:
-#     return {
-#         "id": str(student["_id"]),
-#         "email": student["email"],
-#         "course_of_study": student["course_of_study"],
-#         "year": student["year"],
-#         "GPA": student["gpa"],
-#     }
