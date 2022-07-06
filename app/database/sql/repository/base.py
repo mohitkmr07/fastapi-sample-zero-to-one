@@ -4,8 +4,8 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
-from app.db.models.model import Base
-from app.db.session import SessionLocal
+from app.database.sql.models.model import Base
+from app.database.sql.session import SessionLocal
 
 ModelType = TypeVar("ModelType", bound=Base)
 

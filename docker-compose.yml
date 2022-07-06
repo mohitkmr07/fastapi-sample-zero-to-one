@@ -22,3 +22,15 @@ services:
       - '6379:6379'
     volumes:
       - ./data/redis:/bitnami/redis/data
+
+  database:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=test_db
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test123
+    volumes:
+      - ./data/mongo:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./data/mongo:/data/db
+    ports:
+      - '27017-27019:27017-27019'

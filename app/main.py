@@ -1,3 +1,4 @@
+import logging
 from http import HTTPStatus
 from http.client import INTERNAL_SERVER_ERROR
 
@@ -8,8 +9,8 @@ from starlette.responses import JSONResponse
 from app.api.endpoints.v1 import router
 from app.cache.redis import initialize_redis
 from app.core.exceptions import RequestError, RequestErrorHandler
-from app.db.models import model
-from app.db.session import engine
+from app.database.sql.models import model
+from app.database.sql.session import engine
 
 model.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -28,6 +29,9 @@ async def custom_http_exception_handler(request, exc):
         status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
         content={"message": INTERNAL_SERVER_ERROR},
     )
+
+
+logger = logging.getLogger(__name__)
 
 
 @app.get("/")

@@ -6,8 +6,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from starlette.requests import Request
 
-from app.db.deps import get_db
-from app.db.models.model import User
+from app.database.sql.deps import get_db
+from app.database.sql.models.model import User
 from app.schemas.user import UserResponse, UserRequest
 from app.services import user_service
 

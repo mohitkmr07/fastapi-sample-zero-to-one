@@ -31,5 +31,11 @@ class Settings:
     POOL = config("POOL", cast=str, default="~sqlalchemy.pool.QueuePool")
     REDIS_URL = config("REDIS_URL", cast=str)
 
+    MONGO_USER = config("MONGO_USER", cast=str)
+    MONGO_PASSWORD = config("MONGO_PASSWORD", cast=Secret)
+    MONGO_SERVER = config("MONGO_SERVER", cast=str)
+    MONGO_PORT = config("MONGO_PORT", cast=int, default=27017)
+    MONGO_DB = config("MONGO_DB", cast=str)
+
 
 settings = Settings()
