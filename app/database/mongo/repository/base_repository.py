@@ -20,8 +20,7 @@ class BaseDocumentRepository(Generic[DocumentModelType]):
 
         **Parameters**
 
-        * `model`: A SQLAlchemy model class
-        * `schema`: A Pydantic model (schema) class
+        * `model`: A Mongo model class
         """
         self.model = model
         self.__collection__ = model.__collection__
