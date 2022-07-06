@@ -1,3 +1,4 @@
+import logging
 from http import HTTPStatus
 from http.client import INTERNAL_SERVER_ERROR
 
@@ -28,6 +29,9 @@ async def custom_http_exception_handler(request, exc):
         status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
         content={"message": INTERNAL_SERVER_ERROR},
     )
+
+
+logger = logging.getLogger(__name__)
 
 
 @app.get("/")
