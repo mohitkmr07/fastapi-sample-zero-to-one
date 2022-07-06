@@ -25,7 +25,6 @@ class BaseDocumentRepository(Generic[DocumentModelType]):
         self.model = model
         self.__collection__ = model.__collection_name__
 
-    # @classmethod
     @property
     def collection(self):
         if self.__collection__ is None:

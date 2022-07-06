@@ -31,12 +31,13 @@ async def retrieve_student(id: str) -> StudentResponse:
 #         return False
 #
 #
-# Delete a student from the database
 
-async def delete_student_by_id(id: str):
+
+# Delete a student from the database
+async def delete_student_by_id(id: OID):
     await students_repository.delete_document(id=id)
 
 
-async def get_user_by_id(id: str) -> StudentResponse:
+async def get_user_by_id(id: OID) -> StudentResponse:
     student = await students_repository.get_document_by_id(id=id)
     return student
