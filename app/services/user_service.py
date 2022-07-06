@@ -7,9 +7,9 @@ from starlette.requests import Request
 
 from app.common.errors import ErrorCode
 from app.core.exceptions import RequestError
-from app.db.models.model import User, Address
-from app.db.repository.address import address_repository
-from app.db.repository.user import user_repository, user_cached_repository
+from app.database.sql.models.model import User, Address
+from app.database.sql.repository.address import address_repository
+from app.database.sql.repository.user import user_cached_repository, user_repository
 from app.schemas.user import UserRequest, UserResponse
 
 

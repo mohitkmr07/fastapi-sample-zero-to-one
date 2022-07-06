@@ -2,6 +2,7 @@ from abc import abstractmethod
 from typing import List, TypeVar, Generic, Type
 
 from bson import ObjectId
+from fastapi.encoders import jsonable_encoder
 from pymongo.results import InsertOneResult
 
 from app.database.mongo.models.base import OID, DocumentModel
@@ -41,7 +42,7 @@ class BaseDocumentRepository(Generic[DocumentModelType]):
 
     @abstractmethod
     async def create_document(self, document: DocumentModelType) -> OID:
-        result: InsertOneResult = await database[self.collection].insert_one(document.__dict__)
+        result: InsertOneResult = await database[self.collection].insert_one(jsonable_encoder(document))
         return result.inserted_id
 
     @abstractmethod

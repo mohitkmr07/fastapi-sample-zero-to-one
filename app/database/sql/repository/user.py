@@ -4,8 +4,8 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 
 from app.cache.redis import CachedEntity, CacheEntity
-from app.db.models.model import User
-from app.db.repository.base import BaseRepository
+from app.database.sql.models.model import User
+from app.database.sql.repository.base import BaseRepository
 
 
 class UserRepository(BaseRepository[User]):

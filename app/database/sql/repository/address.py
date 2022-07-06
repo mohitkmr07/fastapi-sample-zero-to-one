@@ -1,5 +1,5 @@
-from app.db.models.model import Address
-from app.db.repository.base import BaseRepository
+from app.database.sql.models.model import Address
+from app.database.sql.repository.base import BaseRepository
 
 
 class AddressRepository(BaseRepository[Address]):
