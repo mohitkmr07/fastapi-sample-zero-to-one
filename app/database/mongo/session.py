@@ -6,7 +6,7 @@ client = motor.motor_asyncio.AsyncIOMotorClient(host=settings.MONGO_SERVER,
                                                 username=settings.MONGO_USER,
                                                 password=str(settings.MONGO_PASSWORD),
                                                 port=settings.MONGO_PORT,
-                                                maxPoolSize=10,
-                                                minPoolSize=10)
+                                                maxPoolSize=50,
+                                                minPoolSize=30)
 
 database = getattr(client, settings.MONGO_DB)
