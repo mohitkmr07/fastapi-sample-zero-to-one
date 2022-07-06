@@ -4,10 +4,10 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, EmailStr, BaseConfig
 
-from app.database.mongo.models.base import MongoModel, OID
+from app.database.mongo.models.base import OID
 
 
-class StudentResponse(MongoModel):
+class StudentResponse(BaseModel):
     id: OID = Field(alias="_id")
     name: str = Field(...)
     email: str = Field(...)

@@ -5,16 +5,6 @@
 from typing import Optional
 
 from bson import ObjectId
-from pydantic.main import BaseModel
-
-
-class MongoModel(BaseModel):
-    # class Config(BaseConfig):
-    #     json_encoders = {
-    #         datetime: lambda dt: dt.isoformat(),
-    #         ObjectId: lambda oid: str(oid),
-    #     }
-    pass
 
 
 class OID(str):
@@ -32,20 +22,12 @@ class OID(str):
 
 
 class DocumentModel(dict):
-    class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
-
-        @classmethod
-        def alias_generator(cls, string: str) -> str:
-            """ Camel case generator """
-            temp = string.split('_')
-            return temp[0] + ''.join(ele.title() for ele in temp[1:])
+    pass
 
 
 class Student(DocumentModel):
     __collection_name__ = 'students'
-    id: Optional[OID]
+    _id: Optional[OID]
     name: Optional[str]
     email: Optional[str]
     course: Optional[str]
